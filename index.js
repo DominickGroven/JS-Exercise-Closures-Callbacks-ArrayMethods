@@ -27,10 +27,13 @@ function processFirstItem(stringList, callback) {
  * Study the code for counter1 and counter2. Answer the questions below.
  * 
  * 1. What is the difference between counter1 and counter2?
+ * Counter1 is returning the finction counter where as counter 2 is just returning the count variable
  * 
  * 2. Which of the two uses a closure? How can you tell?
+ * counter2 because it needs closure from the variable out side of the function;
  * 
  * 3. In what scenario would the counter1 code be preferable? In what scenario would counter2 be better? 
+ * counter2 would be better if you plan on re using the variables.
  *
 */
 
@@ -56,15 +59,19 @@ function counter2() {
 
 Write a function called `inning` that generates a random number of points that a team scored in an inning. This should be a whole number between 0 and 2. */
 
-function inning(/*Code Here*/){
-
-    /*Code Here*/
-
+function inning() {
+  return Math.round(Math.random() * 2);
 }
+console.log(inning())
+console.log(inning())
+console.log(inning())
+
+
 
 /* Task 3: finalScore()
 
-Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of innings and and returns the final score of the game in the form of an object.
+Write a higher order function called `finalScore` that accepts the callback function `inning` (from above) and a number of 
+innings and and returns the final score of the game in the form of an object.
 
 For example, 
 
@@ -76,11 +83,20 @@ finalScore(inning, 9) might return:
 
 */ 
 
-function finalScore(/*code Here*/){
 
-  /*Code Here*/
 
+function finalScore(cb, num) {
+  let score = {
+    home: 0,
+    away: 0,
+  };
+  for (let i = 0; i < num; i++) {
+    score.home += cb();
+    score.away += cb();
+  }
+  return score;
 }
+console.log(finalScore(inning, 9));
 
 /* Task 4: 
 
@@ -104,8 +120,33 @@ and returns the score at each pont in the game, like so:
 
 Final Score: awayTeam - homeTeam */
 
-function scoreboard(/* CODE HERE */) {
-  /* CODE HERE */
+function getInningScore(home, away, innings) {
+  
+  if (innings === 1) {
+    return "1st inning:";
+  }
+  else if (innings=== 2) {
+    return "2nd inning:";
+  }
+  else if (innings === 3) {
+    return "3rd inning:";
+  }
+  else return `${innings}th inning:`;
+
+}
+
+function scoreboard(cb1, cb2, innings) {
+  let finalHome = cb2()
+  let finalAway = cb2()
+  for (let i = 0; i <= innings; i++) {
+    let home = cb1();
+    let away = cb1();
+    finalHome += home;
+    finalAway += away;
+    
+  }
+  
 }
 
 
+console.log(scoreboard(getInningScore, inning, 9))
